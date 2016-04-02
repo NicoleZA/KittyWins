@@ -1,0 +1,36 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded">
+  <Page.actionBar>
+    <ActionBar title="LegalSuite">
+      <ActionBar.titleView>
+        <StackLayout orientation="horizontal" horizontalAlignment="left">
+          <Image src="~/img/icon64.png" class="action-image" />
+          <Label text="{{fileref}}"  class="action-label"/>
+        </StackLayout>
+      </ActionBar.titleView>
+      <ActionBar.actionItems>
+        <ActionItem tap="onNew" ios.systemIcon="4" ios.position="right" android.systemIcon="ic_menu_add" text="New" android.position="actionBarIfRoom " />
+        <ActionItem tap="{{deleteMatter}}" ios.systemIcon="16" ios.position="right" android.systemIcon="ic_menu_delete" text="Delete" android.position="actionBarIfRoom" />
+      </ActionBar.actionItems>
+    </ActionBar>
+  </Page.actionBar>
+  <StackLayout style="margin:5;">
+
+    <Label text="Date:" class="fieldLabel"/>
+    <StackLayout orientation="horizontal">
+      <label hint="Date" text="{{ date }}" class="field"/>
+      <Image src="~/img/calendar.png" tap="{{ toggleDatePicker }}" class="datePickerLookupButton"/>
+    </StackLayout>
+
+    <StackLayout visibility="{{ showDatePicker ? 'visible' : 'collapsed' }}" class="datePickerLayout">
+      <DatePicker day="{{day}}" month="{{month}}" year="2015" verticalAlignment="center" horizontalAlignment="center"  />
+      <StackLayout orientation="horizontal" style="horizontal-align:right">
+        <Button text="Accept" class="datePickerButton" tap="{{datePickerAccept}}"/>
+        <Button text="Cancel" class="datePickerButton" tap='{{datePickerCancel}}'/>
+      </StackLayout>
+    </StackLayout>
+
+    <Label text="Description:"  class="fieldLabel"/>
+    <TextView hint="Description" text="{{ description }}" class="field"/>
+  </StackLayout>
+
+</Page>

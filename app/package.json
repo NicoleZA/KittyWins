@@ -1,0 +1,15 @@
+{
+	"name": "Kryolan",
+	"main": "app.js",
+	"version": "1.0.0",
+	"author": "nicole.orpengmail.com",
+	"description": "Kryolan App",
+	"license": "Apache-2.0",
+	"private": true,
+	"keywords": [
+		"Kryolan"
+	],
+	"android": {
+		"v8Flags": "--expose_gc"
+	}
+}

@@ -1,0 +1,35 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded">
+  <Page.actionBar>
+    <ActionBar title="LegalSuite">
+      <ActionBar.titleView>
+        <StackLayout orientation="horizontal" horizontalAlignment="left">
+          <Image src="~/img/icon64.png" class="action-image" />
+          <StackLayout>
+            <Label text="Filenotes"  class="action-label"/>
+            <Label text="{{FileRef}}"  class="action-subLabel"/>
+          </StackLayout>
+        </StackLayout>
+      </ActionBar.titleView>
+      <ActionBar.actionItems>
+        <ActionItem tap="onNew"
+            ios.systemIcon="4" ios.position="right"
+            android.systemIcon="ic_menu_add" text="New" android.position="actionBarIfRoom "
+        />
+        <ActionItem tap="{{deleteMatter}}"
+          ios.systemIcon="16" ios.position="right"
+            android.systemIcon="ic_menu_delete" text="Delete" android.position="actionBarIfRoom"
+        />
+      </ActionBar.actionItems>
+    </ActionBar>
+  </Page.actionBar>
+  <StackLayout>
+    <ListView items="{{ filenotes }}" itemTap="{{editFileNote}}">
+      <ListView.itemTemplate>
+        <StackLayout orientation="vertical">
+          <Label text="{{ date }}" class = "listTitle"/>
+          <Label text="{{ description }}" class = "listDescription"/>
+        </StackLayout>
+      </ListView.itemTemplate>
+    </ListView>
+  </StackLayout>
+</Page>

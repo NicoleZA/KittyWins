@@ -1,0 +1,88 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded">
+  <Page.actionBar>
+    <ActionBar title="LegalSuite">
+      <ActionBar.titleView>
+        <StackLayout orientation="horizontal" horizontalAlignment="left">
+          <Image src="~/img/logo.png" class="action-image" />
+        </StackLayout>
+      </ActionBar.titleView>
+      <ActionBar.actionItems>
+        <ActionItem tap="onNew" ios.systemIcon="4" ios.position="right" android.systemIcon="ic_menu_add" text="New" android.position="actionBarIfRoom " />
+        <ActionItem tap="{{deleteMatter}}" ios.systemIcon="16" ios.position="right" android.systemIcon="ic_menu_delete" text="Delete" android.position="actionBarIfRoom" />
+      </ActionBar.actionItems>
+    </ActionBar>
+  </Page.actionBar>
+  <StackLayout>
+    <Label text="{{ Reference }}" class="formLabel"/>
+  <TabView selectedIndexChanged="{{tabChanged}}">
+   <TabView.items>
+     <TabViewItem title="Details">
+       <TabViewItem.view>
+
+         <StackLayout class="formFrame">
+           <StackLayout orientation="horizontal" class="formItem">
+             <Label text="FileRef: "  class="formLabel"/>
+             <Label text="{{FileRef}}"  class="formField"/>
+           </StackLayout>
+           <StackLayout orientation="horizontal" class="formItem">
+             <Label text="Client Reference: "  class="formLabel"/>
+             <Label text="{{TheirRef}}"  class="formField"/>
+           </StackLayout>
+           <StackLayout orientation="horizontal" class="formItem">
+             <Label text="Date Instructed: "  class="formLabel"/>
+             <Label text="{{_DateInstructed}}"  class="formField"/>
+           </StackLayout>
+           <StackLayout orientation="horizontal" class="formItem">
+             <Label text="Type: "  class="formLabel"/>
+             <Label text="{{MatType}}"  class="formField"/>
+           </StackLayout>
+
+           <StackLayout visibility="{{ MatType == 'Collections' ? 'visible' : 'collapsed' }}" >
+             <StackLayout class="formItem" >
+               <Label text="" class="formGroupHeading"/>
+               <Label text="Collections Details" class="formGroupHeading"/>
+             </StackLayout>
+             <StackLayout orientation="horizontal" class="formItem" >
+               <Label text="Court: "  class="formLabel"/>
+               <Label text="{{Court}}"  class="formField"/>
+             </StackLayout>
+             <StackLayout orientation="horizontal" class="formItem">
+               <Label text="Type: "  class="formLabel"/>
+               <Label text="{{_Defended}}"  class="formField"/>
+             </StackLayout>
+             <StackLayout orientation="horizontal" class="formItem">
+               <Label text="Case Type: "  class="formLabel"/>
+               <Label text="{{_CaseType}}"  class="formField"/>
+             </StackLayout>
+           </StackLayout>
+
+         </StackLayout>
+
+
+        </TabViewItem.view>
+     </TabViewItem>
+      <TabViewItem title="Filenotes">
+        <TabViewItem.view>
+          <StackLayout>
+            <ListView items="{{ filenotes }}" itemTap="{{filenoteEdit}}">
+              <ListView.itemTemplate>
+                <StackLayout orientation="vertical">
+                  <Label text="{{ date }}" class = "listTitle"/>
+                  <Label text="{{ description }}" class = "listDescription"/>
+                </StackLayout>
+              </ListView.itemTemplate>
+            </ListView>
+          </StackLayout>
+       </TabViewItem.view>
+     </TabViewItem>
+     <TabViewItem title="FeeNotes">
+      <TabViewItem.view>
+        <StackLayout class="formFrame">
+        </StackLayout>
+      </TabViewItem.view>
+     </TabViewItem>
+   </TabView.items>
+ </TabView>
+</StackLayout>
+
+</Page>

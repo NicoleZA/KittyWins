@@ -1,0 +1,20 @@
+{
+	"name": "kryolan",
+	"description": "Kryolan App",
+	"main": "app.js",
+	"version": "1.0.0",
+	"author": "nicole.orpengmail.com",
+	"license": "Apache-2.0",
+	"private": true,
+	"nativescript": {
+		"id": "org.nativescript.kryolan",
+		"tns-android": {
+			"version": "1.7.1"
+		}
+	},
+	"dependencies": {
+		"moment": "^2.11.2",
+		"tns-core-modules": "1.7.0",
+		"custom": "*"
+	}
+}

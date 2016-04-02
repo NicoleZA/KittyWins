@@ -1,0 +1,83 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded">
+  <Page.actionBar>
+    <ActionBar title="Kryolan">
+      <ActionBar.titleView style="padding: 10;">
+          <Image src="~/img/logo.png" style="height: 50;"/>
+       </ActionBar.titleView>
+      <ActionBar.actionItems>
+        <ActionItem tap="{{onSearch}}" visibility="{{ showSearch ? 'visible' : 'collapsed' }}"
+          ios.systemIcon="9" ios.position="left"
+          android.systemIcon="ic_menu_search" android.position="actionBar"
+        />
+        <ActionItem tap="onShare" visibility="collapsed"
+          ios.systemIcon="9" ios.position="left"
+          android.systemIcon="ic_menu_share" android.position="actionBar"
+        />
+        <ActionItem tap="onNew" visibility="{{ showNew ? 'visible' : 'collapsed' }}"
+            ios.systemIcon="4" ios.position="right"
+            android.systemIcon="ic_menu_add" text="New" android.position="actionBarIfRoom "
+        />
+        <ActionItem tap="{{deletecategory}}" visibility="{{ showDelete ? 'visible' : 'collapsed' }}"
+          ios.systemIcon="16" ios.position="right"
+            android.systemIcon="ic_menu_delete" text="Delete" android.position="actionBarIfRoom"
+        />
+      </ActionBar.actionItems>
+    </ActionBar>
+  </Page.actionBar>
+  <StackLayout>
+    <SearchBar submit="{{searchData}}" visibility="{{ showSearchBar ? 'visible' : 'collapsed' }}" />
+    
+    <TabView selectedIndexChanged="{{tabChanged}}" >
+        <TabView.items>
+            <TabViewItem title="Home">
+                <TabViewItem.view>
+                <StackLayout style="padding : 20; background-image: ~/img/banner2.jpg; background-repeat: no-repeat; background-size: cover;">
+                    <Label text="Welcome" style="font-weight : bold; font-size : 18;" />
+                    <Label text="At Kryolan, we make make-up. But not like anybody else. Because unlike everybody else, we actually make our make-up. We‘ve done it our own way for 70 years and three generations. We think of it. We manufacture it. Formulate it and love it into existence. There is only one real professional make-up maker. There is only one Kryolan." textWrap="true" />
+                </StackLayout>
+                </TabViewItem.view>
+            </TabViewItem>
+            <TabViewItem title="Shop">
+                <TabViewItem.view>
+                <StackLayout>
+                    <StackLayout id="Header" class="categoryHeader">
+                        <Label text="{{categoryCaption}}" textWrap="True" width="50%" horizontalAlignment="left"/>
+                    </StackLayout>
+                    <ScrollView>
+                        <WrapLayout id="wrapCategories" horizontalAlignment="centre">
+                        </WrapLayout>
+                    </ScrollView>
+                </StackLayout>
+                </TabViewItem.view>
+            </TabViewItem>
+            <TabViewItem title="Contact">
+                <TabViewItem.view>
+                <StackLayout  orientation="horizontal" width="210" height="210">
+                <ListView items="{{ categories }}" itemTap="{{categoryView}}">
+                    <ListView.itemTemplate >
+                    <StackLayout width="100" >
+                        <Image src="{{ Image }}" style=" height:100; margin:20;"/>
+                    </StackLayout>
+                    </ListView.itemTemplate>
+                </ListView>
+                <ScrollView >
+                    <Repeater items="{{ categories }}" itemTap="{{categoryView}}">
+                    <Repeater.itemsLayout>
+                        <WrapLayout />
+                    </Repeater.itemsLayout>
+                    <Repeater.itemTemplate>
+                        <StackLayout style="margin-top: 20;" tap="{{categoryView}}">
+                        <Image src="{{ Image }}" style="height:120; margin:0 25;"/>
+                        <Label text="{{ Description }}" class="listTitle"/>
+                        </StackLayout>
+                    </Repeater.itemTemplate>
+                    </Repeater>
+                    </ScrollView>
+               </StackLayout>
+                </TabViewItem.view>
+                </TabViewItem>
+        </TabView.items>
+    </TabView>
+
+   </StackLayout>
+</Page>

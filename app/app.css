@@ -1,0 +1,112 @@
+ActionBar {
+    background-color:  navy;
+    color: white;
+}
+
+ListView {
+  _background-color:  lemonchiffon;
+  font-size: 16;
+}
+
+.buttonImage {
+    text-align: left;
+    padding-left: 30;
+    padding-right: 0;
+    margin: 5;
+    font-size: 12;
+    width: 100;
+    height: 36;
+    border-radius: 5;
+    background-color: silver;
+    background-repeat: no-repeat;
+    background-position: 14 18;
+}
+
+.action-image {
+  height: 50;
+}
+
+.action-label {
+  margin-top: 5;
+  margin-left: 5;
+  font-size: 16;
+}
+
+.action-subLabel {
+  margin-top: 3;
+  margin-left: 5;
+  font-size: 12;
+  color: silver;
+}
+
+.label-standard {
+  margin-top: 5;
+  margin-left: 5;
+  font-size: 16;
+}
+
+.listTitle {
+    font-size: 14;
+    font-weight: bold;
+    text-align: center;
+}
+
+.listDescription {
+  font-size: 12;
+}
+
+.formFrame {
+  padding: 5;
+}
+
+.formItem {
+  margin-top: 2;
+  margin-bottom: 2;
+}
+
+.formGroupHeading {
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: 13;
+}
+.formLabel {
+  font-weight: bold;
+  font-size: 12;
+}
+
+.formField {
+  font-size: 12;
+}
+
+.categoryGroup {
+    margin-top: 20;
+}
+.categoryImage {
+    height:120; 
+    margin:0 25;
+}
+
+.categoryHeader {
+    text-align: left;
+    height: 90;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.productHeader {
+    text-align: left;
+    font-weight: bold;
+    font-size: 16;
+    height: 90;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.productHeaderText {
+    vertical-align: center;
+    text-align: left;
+    font-weight: bold;
+    font-size: 16;
+}
