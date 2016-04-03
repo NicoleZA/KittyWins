@@ -1,6 +1,6 @@
 {
-	"name": "kryolan",
-	"description": "Kryolan App",
+	"name": "kittywins",
+	"description": "Kitty Wins",
 	"main": "app.js",
 	"version": "1.0.0",
 	"author": "nicole.orpengmail.com",
@@ -10,11 +10,14 @@
 		"id": "org.nativescript.kryolan",
 		"tns-android": {
 			"version": "1.7.1"
+		},
+		"tns-ios": {
+			"version": "1.7.1"
 		}
 	},
 	"dependencies": {
 		"moment": "^2.11.2",
-		"tns-core-modules": "1.7.0",
+		"tns-core-modules": "1.7.1",
 		"custom": "*"
 	}
 }

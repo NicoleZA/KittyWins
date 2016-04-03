@@ -1,0 +1,11 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" actionBarHidden="true" class="kitchenPage" loaded="pageLoaded">
+  <StackLayout>
+  <Button text = "^" tap="moveUp"/>
+  <Button text = "<" tap="moveLeft"/>
+  <Button text = ">"  tap="moveRight"/>
+  <Button text = "!"  tap="moveDown"/>
+  </StackLayout>
+   <AbsoluteLayout>
+            <Image src="~/img/catLookingRight.jpg"  style=" height:100;"/>
+      </AbsoluteLayout>
+</Page>

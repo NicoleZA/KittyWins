@@ -1,0 +1,15 @@
+{
+  "name": "custom",
+  "version": "1.0.0",
+  "description": "Custom functions",
+  "author": "Nicole Orpen",
+  "main": "index.js",
+  "keywords": [
+    "custom"
+  ],
+  "dependencies": {
+    "sf": "^0.1.8",
+    "underscore": "^1.8.3"
+  },
+  "private": true
+}
