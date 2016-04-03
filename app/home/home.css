@@ -3,7 +3,8 @@
    _padding: 30;
 }
 .logo {
-   padding: 30;    
+   padding: 30;  
+   margin: 30;   
 }
 .button {
     font-size: 20;

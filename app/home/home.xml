@@ -3,6 +3,6 @@
         <Label dock="top" text="Kitty Wins" style="margin-top: 20; text-align:center;  font-size: 40;"/>
         <Button dock="bottom" text="Quit" class="button"/>
         <Button dock="bottom" text="Play" tap="{{showKitchen}}" class="button"/>
-        <Image src="~/img/KittyRight.png" class="logo" />
+        <Image src="~/img/logo.png" class="logo" />
     </DockLayout>
 </Page>

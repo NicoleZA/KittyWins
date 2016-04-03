@@ -1,10 +1,15 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" actionBarHidden="true" class="kitchenPage" loaded="pageLoaded">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" actionBarHidden="true" class="kitchenPage" loaded="pageLoaded" >
    <AbsoluteLayout id="layout">
-         <StackLayout>         
-            <Button text="L" tap="{{moveLeft}}" class="button"/>
-            <Button text="R" tap="{{moveRight}}" class="button"/>
-         </StackLayout>         
-         <Image id="kitty" src="~/img/KittyRight.png" top="280" style="width: 50; height:50;" />
-         <Image src="~/img/fish1-48.png"/>    
+        <Image id="left" src="~/img/left.png" touch="{{moveLeft}}" class="arrows"/>    
+        <Image id= "right" src="~/img/right.png" touch="{{moveRight}}" class="arrows"/>    
+        <Button id="jump" text="Jump" tap="{{jump}}" class="button"/>
+        <Image id="kitty" src="~/img/KittySitRight.png" style="width: 60; height:60;" touch="{{touchKitty}}" />
+        <Image id="fish1" src="~/img/fish1-48.png" class="food"/>    
+        <Image id="fish2" src="~/img/fish2-48.png" class="food"/>    
+        <Image id="pellet" src="~/img/pellet-24.png" class="food"/>    
+        <DockLayout stretchLastChild="true">
+            <Label id="win" dock="top" text="Kitty Wins" visibility="collapse" style="margin-top: 20; text-align:center;  font-size: 40;"/>
+            <Image id="cup" src="~/img/cup.png" style="height:140;" visibility="collapse" />
+        </DockLayout>   
     </AbsoluteLayout>
 </Page>

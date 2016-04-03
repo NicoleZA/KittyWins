@@ -18,8 +18,7 @@ var viewModel = (function (_super) {
         _super.call(this);
         me = this;
         page = args;
-        var tada = sound.create("~/img/meow-short.mp3");
-        tada.play();
+        sound.create("~/img/meow-short.mp3").play();
     };
     
     viewModel.prototype.showKitchen = function () {

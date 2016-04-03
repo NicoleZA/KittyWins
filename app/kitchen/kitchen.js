@@ -7,48 +7,268 @@ var LabelModule = require("ui/label");
 var ImageModule = require("ui/image");
 var orientationModule = require("nativescript-screen-orientation");
 var absoluteLayoutModule = require("ui/layouts/absolute-layout");
+var timer = require("timer");
+var sound = require("nativescript-sound");
 
 var viewModel = (function (_super) {
     __extends(viewModel, _super);
 
     var me = null;
     var page = null;
-      
+    var kitty = null;
+    var move = 0;
+    var waiting = 0;
+    var pos = 100;
+    var last = "right";
+    var fridgeLeft = 20;
+    var fridgeRight = 145;
+    var counterLeft = 200;
+    var floorHeight = 240;
+    var counterHeight = 130;
+    var fridgeHeight = 50;
+    var ceilingHeight = 0;
+    var height = 0;
+    var endHeight = 0;
+    var found = 0;
+    
+    var fish1Pos = 30;
+    var fish2Pos =200;
+    var pelletPos = 300;
+    var controlHeight = 260;
+    var leftPos = 0;
+    var rightPos = 80;
+    var jumpPos = 550;
+     var time = new Date();
+
     //constructor
     function viewModel(args) {
         _super.call(this);
         me = this;
         page = args;
+        height = floorHeight;
+        kitty = page.getViewById("kitty");
+        absoluteLayoutModule.AbsoluteLayout.setTop(kitty, height);
+        absoluteLayoutModule.AbsoluteLayout.setLeft(kitty, pos);
+        me.setFood();
+        timer.setTimeout(me.moveKitty, 500);
     };
  
-     viewModel.prototype.moveRight = function () {
-      var l = page.getViewById("layout");
-        var lp = absoluteLayoutModule.AbsoluteLayout.getLeft(l);
-         var kitty = page.getViewById("kitty");
-        var pos = absoluteLayoutModule.AbsoluteLayout.getLeft(kitty) + 1;
-        absoluteLayoutModule.AbsoluteLayout.setLeft(kitty, pos);
+      viewModel.prototype.moveLeft = function (args) {
+         if(move == "jump" || move == "fall") return;
+         move = (args.action == "up" ? "" : "left");
+     }
+     
+     viewModel.prototype.moveRight = function (args) {
+         if(move == "jump" || move == "fall") return;
+         move = (args.action == "up" ? "" : "right");
      }
  
-      viewModel.prototype.moveLeft = function () {
-        var kitty = page.getViewById("kitty");
-        var pos = absoluteLayoutModule.AbsoluteLayout.getLeft(kitty) - 1;
-        if(pos > 0) absoluteLayoutModule.AbsoluteLayout.setLeft(kitty, pos);
+       viewModel.prototype.jump = function (args) {
+        switch(height) {
+            case floorHeight:
+                endHeight = counterHeight;
+                move = "jump";
+                break;
+            case counterHeight:
+                endHeight = fridgeHeight; 
+                move = "jump";
+               break;
+             case fridgeHeight:
+                endHeight = counterHeight;
+                move = "fall";
+                break;
+        }
      }
- 
-    return viewModel;
+     
+     viewModel.prototype.touchKitty = function (args) {
+        sound.create("~/img/purr.mp3").play();
+     }
+
+      viewModel.prototype.moveKitty = function (args) {
+        if (found == 3) return;
+        timer.setTimeout(me.moveKitty, 10);
+        switch(move) {
+            case "":
+                waiting += 1;
+                if(waiting > 800) {
+                   kitty.src= (last == "left" ? "~/img/KittySitLeft.png" : "~/img/KittySitRight.png") ;
+                   sound.create("~/img/meow-short.mp3").play();
+                    waiting = 0;
+                }
+                   break;
+            case "left":
+              waiting = 0;
+              last = "left";
+              pos -= 1;
+              if(pos < 0) pos = 0;
+              if (height == fridgeHeight && pos < fridgeLeft) {
+                  endHeight = floorHeight;
+                  move="fall"
+              } else if (height == counterHeight && pos < counterLeft) {
+                  endHeight = floorHeight;
+                  move="fall"
+              } else {
+                me.checkFood();
+                kitty.src= (pos % 2 == 0 ? "~/img/KittyLeft.png" : "~/img/KittyLeft1.png") ;
+                absoluteLayoutModule.AbsoluteLayout.setLeft(kitty, pos);
+              }
+              break;            
+            case "right":            
+                waiting = 0;
+                last = "right";
+                pos += 1;
+                if (height == fridgeHeight && pos > fridgeRight) {
+                    endHeight = counterHeight;
+                    move="fall"
+                    break;
+                }
+                me.checkFood();
+               kitty.src= (pos % 2 == 0 ? "~/img/KittyRight.png" : "~/img/KittyRight1.png") ;
+                absoluteLayoutModule.AbsoluteLayout.setLeft(kitty, pos);
+                break;            
+            case "jump":            
+                waiting = 0;
+                pos += (last == "left" ? -1: 1);
+                if(pos < 0) pos = 0;
+                height -= 1;
+                kitty.src= (last == "left" ? "~/img/KittyJumpLeft.png" : "~/img/KittyJumpRight.png") ;
+                absoluteLayoutModule.AbsoluteLayout.setLeft(kitty, pos);
+                absoluteLayoutModule.AbsoluteLayout.setTop(kitty, height);
+                if (height == endHeight) {
+                    switch(height) {
+                    case counterHeight:
+                        if(pos > counterLeft) {
+                            kitty.src= (last == "left" ? "~/img/KittySitLeft.png" : "~/img/KittySitRight.png") ;
+                            move = ""
+                        } else {
+                            endHeight = floorHeight;
+                            move = "fall"
+                        }
+                        break;
+                    case fridgeHeight:
+                        if(pos < fridgeRight) {
+                            kitty.src= (last == "left" ? "~/img/KittySitLeft.png" : "~/img/KittySitRight.png") ;
+                            move = ""
+                       } else {
+                            endHeight = counterHeight;
+                            move = "fall"
+                       }
+                       break;
+                    }
+                }
+                break;            
+            case "fall":            
+                waiting = 0;
+                pos += (last == "left" ? -1: 1);
+                if(pos < 0) pos = 0;
+                height += 1;
+                kitty.src= (last == "left" ? "~/img/KittyFallLeft.png" : "~/img/KittyFallRight.png") ;
+                absoluteLayoutModule.AbsoluteLayout.setLeft(kitty, pos);
+                absoluteLayoutModule.AbsoluteLayout.setTop(kitty, height);
+                if (height == endHeight) {
+                     if(endHeight == counterHeight && pos < counterLeft) {
+                        endHeight = floorHeight;
+                        move = "fall"
+                     } else {
+                         kitty.src= (last == "left" ? "~/img/KittySitLeft.png" : "~/img/KittySitRight.png") ;
+                         move = ""
+                     }
+               }
+                break;            
+        }
+
+     }
+
+     viewModel.prototype.setFood = function () {
+        var view = page.getViewById("left");
+        absoluteLayoutModule.AbsoluteLayout.setTop(view, controlHeight);
+        absoluteLayoutModule.AbsoluteLayout.setLeft(view, leftPos);
+        var view = page.getViewById("right");
+        absoluteLayoutModule.AbsoluteLayout.setTop(view, controlHeight);
+        absoluteLayoutModule.AbsoluteLayout.setLeft(view, rightPos);
+        var view = page.getViewById("jump");
+        absoluteLayoutModule.AbsoluteLayout.setTop(view, controlHeight);
+        absoluteLayoutModule.AbsoluteLayout.setLeft(view, jumpPos);
+
+       var view = page.getViewById("fish1");
+        absoluteLayoutModule.AbsoluteLayout.setTop(view, fridgeHeight + 30);
+        absoluteLayoutModule.AbsoluteLayout.setLeft(view, fish1Pos);
+
+       var view = page.getViewById("fish2");
+        absoluteLayoutModule.AbsoluteLayout.setTop(view, counterHeight + 30);
+        absoluteLayoutModule.AbsoluteLayout.setLeft(view, fish2Pos);
+
+       var view = page.getViewById("pellet");
+        absoluteLayoutModule.AbsoluteLayout.setTop(view, floorHeight + 30);
+        absoluteLayoutModule.AbsoluteLayout.setLeft(view, pelletPos);
+     }
+     
+     viewModel.prototype.checkFood = function () {
+        switch (height) {
+        case fridgeHeight:
+             if(pos == fish1Pos ) {
+                 fish1Pos = 0
+                var view = page.getViewById("fish1");
+                absoluteLayoutModule.AbsoluteLayout.setTop(view, 0);
+                absoluteLayoutModule.AbsoluteLayout.setLeft(view, fish1Pos);
+                 me.ProcessFound();
+            }
+             break;
+        case counterHeight:
+             if(pos == fish2Pos ) {
+                 sound.create("~/img/found.mp3").play();
+                 fish2Pos = 30
+                var view = page.getViewById("fish2");
+                absoluteLayoutModule.AbsoluteLayout.setTop(view, 0);
+                absoluteLayoutModule.AbsoluteLayout.setLeft(view, fish2Pos);
+                 me.ProcessFound();
+            }
+           break;
+        case floorHeight:
+             if(pos == pelletPos ) {
+                 sound.create("~/img/found.mp3").play();
+                 pelletPos = 60
+                var view = page.getViewById("pellet");
+                absoluteLayoutModule.AbsoluteLayout.setTop(view, 0);
+                absoluteLayoutModule.AbsoluteLayout.setLeft(view, pelletPos);
+                 me.ProcessFound();
+            }
+             break;
+        }
+
+     viewModel.prototype.ProcessFound = function () {
+         found += 1;
+         sound.create("~/img/found.mp3").play();
+         if (found==3) {
+           sound.create("~/img/cheer.mp3").play();
+            var view = page.getViewById("cup");
+            view.visibility = "visible";
+            var view = page.getViewById("win");
+            view.visibility = "visible";
+            
+            var sec = (new Date() - time) / 1000;
+
+            alert("It took you: " + sec + " seconds to help kitty win");   
+
+         }
+      }
+    }
+
+
+return viewModel;
 })(observable.Observable);
 
 
 exports.pageLoaded = function(args) {
-    orientationModule.setCurrentOrientation("landscape");
-    var page = args.object;
-    var obj = new viewModel(page);
-    page.bindingContext = obj ;
+orientationModule.setCurrentOrientation("landscape");
+var page = args.object;
+var obj = new viewModel(page);
+page.bindingContext = obj ;
 };
 
  
  exports.onNavigatingFrom = function(args) {
-     alert("nav from");
-     orientationModule.orientationCleanup();
+//     alert("nav from");
+//     orientationModule.orientationCleanup();
      
  }
