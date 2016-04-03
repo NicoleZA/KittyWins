@@ -5,6 +5,7 @@ var custom = require("custom");
 var StackLayoutModule = require("ui/layouts/stack-layout")
 var LabelModule = require("ui/label");
 var ImageModule = require("ui/image");
+var sound = require("nativescript-sound");
 
 var viewModel = (function (_super) {
     __extends(viewModel, _super);
@@ -17,6 +18,8 @@ var viewModel = (function (_super) {
         _super.call(this);
         me = this;
         page = args;
+        var tada = sound.create("~/img/meow-short.mp3");
+        tada.play();
     };
     
     viewModel.prototype.showKitchen = function () {

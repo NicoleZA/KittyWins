@@ -1,8 +1,8 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" actionBarHidden="true" loaded="pageLoaded" class="page">
-  <StackLayout>
-          <Label text="Kitty Wins" width="100%" horizontalAlignment="center" style="margin-top: 20; text-align:center;  font-size: 40;"/>
-           <Image src="~/img/logo.png" style=" height:200; margin:10;"/>
-           <Button text="Play" tap="{{showKitchen}}" class="button"/>
-           <Button text="Quit" class="buttons"/>
-      </StackLayout>
+    <DockLayout stretchLastChild="true">
+        <Label dock="top" text="Kitty Wins" style="margin-top: 20; text-align:center;  font-size: 40;"/>
+        <Button dock="bottom" text="Quit" class="button"/>
+        <Button dock="bottom" text="Play" tap="{{showKitchen}}" class="button"/>
+        <Image src="~/img/KittyRight.png" class="logo" />
+    </DockLayout>
 </Page>

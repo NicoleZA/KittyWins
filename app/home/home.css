@@ -1,6 +1,11 @@
 .page {
    background-color: lightskyblue;
+   _padding: 30;
+}
+.logo {
+   padding: 30;    
 }
 .button {
     font-size: 20;
+    margin: 0 40;
 }

@@ -1,23 +1,25 @@
 {
-	"name": "kittywins",
-	"description": "Kitty Wins",
-	"main": "app.js",
-	"version": "1.0.0",
-	"author": "nicole.orpengmail.com",
-	"license": "Apache-2.0",
-	"private": true,
-	"nativescript": {
-		"id": "org.nativescript.kryolan",
-		"tns-android": {
-			"version": "1.7.1"
-		},
-		"tns-ios": {
-			"version": "1.7.1"
-		}
-	},
-	"dependencies": {
-		"moment": "^2.11.2",
-		"tns-core-modules": "1.7.1",
-		"custom": "*"
-	}
+  "name": "kittywins",
+  "description": "Kitty Wins",
+  "main": "app.js",
+  "version": "1.0.0",
+  "author": "nicole.orpengmail.com",
+  "license": "Apache-2.0",
+  "private": true,
+  "nativescript": {
+    "id": "org.nativescript.kittywins",
+    "tns-android": {
+      "version": "1.7.1"
+    },
+    "tns-ios": {
+      "version": "1.7.1"
+    }
+  },
+  "dependencies": {
+    "custom": "*",
+    "moment": "^2.11.2",
+    "nativescript-screen-orientation": "^1.0.2",
+    "nativescript-sound": "^1.0.4",
+    "tns-core-modules": "1.7.1"
+  }
 }
