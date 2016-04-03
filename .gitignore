@@ -49,3 +49,11 @@ Temporary Items
 node_modules\moment
 node_modules\tns-core-modules
 /platforms
+/node_modules/nativescript-sound
+/node_modules/nativescript-screen-orientation
+/node_modules/nativescript-sound
+/node_modules/nativescript-screen-orientation
+/node_modules/nativescript-sound
+/node_modules/tns-core-modules
+/node_modules/moment
+/node_modules/nativescript-screen-orientation
