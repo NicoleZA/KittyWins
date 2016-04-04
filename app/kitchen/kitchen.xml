@@ -3,7 +3,7 @@
         <Image id="left" src="~/img/left.png" touch="{{moveLeft}}" class="arrows"/>    
         <Image id= "right" src="~/img/right.png" touch="{{moveRight}}" class="arrows"/>    
         <Button id="jump" text="Jump" tap="{{jump}}" class="button"/>
-        <Image id="kitty" src="~/img/KittySitRight.png" style="width: 60; height:60;" touch="{{touchKitty}}" />
+        <Image id="kitty" src="~/img/KittySitRight.png" style="height:20%;" touch="{{touchKitty}}" />
         <Image id="fish1" src="~/img/fish1-48.png" class="food"/>    
         <Image id="fish2" src="~/img/fish2-48.png" class="food"/>    
         <Image id="pellet" src="~/img/pellet-24.png" class="food"/>    

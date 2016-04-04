@@ -9,6 +9,8 @@ var orientationModule = require("nativescript-screen-orientation");
 var absoluteLayoutModule = require("ui/layouts/absolute-layout");
 var timer = require("timer");
 var sound = require("nativescript-sound");
+var platformModule = require("platform");
+
 
 var viewModel = (function (_super) {
     __extends(viewModel, _super);
@@ -18,38 +20,40 @@ var viewModel = (function (_super) {
     var kitty = null;
     var move = 0;
     var waiting = 0;
-    var pos = 100;
+    var pos = 300;  //100
     var last = "right";
-    var fridgeLeft = 20;
-    var fridgeRight = 145;
-    var counterLeft = 200;
-    var floorHeight = 240;
-    var counterHeight = 130;
-    var fridgeHeight = 50;
+    var alt = false;
+    var fridgeLeft = 60; //20
+    var fridgeRight = 335; //145
+    var counterLeft = 600; //200
+    var floorHeight = 720; //240
+    var counterHeight = 390; //130
+    var fridgeHeight = 150; //50
     var ceilingHeight = 0;
     var height = 0;
     var endHeight = 0;
     var found = 0;
     
-    var fish1Pos = 30;
-    var fish2Pos =200;
-    var pelletPos = 300;
-    var controlHeight = 260;
+    var fish1Pos = 90; //30
+    var fish2Pos =600; //200
+    var pelletPos = 900; //300
+    var controlHeight = 780; //260
     var leftPos = 0;
-    var rightPos = 80;
-    var jumpPos = 550;
+    var rightPos = 80; //240
+    var jumpPos = 550; //1650
      var time = new Date();
+     
+     var screenWidth = 0;
+     var screenHeight = 0;
+     var widthScale = 0;
+     var heightScale = 0;
 
     //constructor
     function viewModel(args) {
         _super.call(this);
         me = this;
         page = args;
-        height = floorHeight;
-        kitty = page.getViewById("kitty");
-        absoluteLayoutModule.AbsoluteLayout.setTop(kitty, height);
-        absoluteLayoutModule.AbsoluteLayout.setLeft(kitty, pos);
-        me.setFood();
+        me.Init();
         timer.setTimeout(me.moveKitty, 500);
     };
  
@@ -99,7 +103,7 @@ var viewModel = (function (_super) {
             case "left":
               waiting = 0;
               last = "left";
-              pos -= 1;
+              pos -= 1 * widthScale;
               if(pos < 0) pos = 0;
               if (height == fridgeHeight && pos < fridgeLeft) {
                   endHeight = floorHeight;
@@ -109,21 +113,24 @@ var viewModel = (function (_super) {
                   move="fall"
               } else {
                 me.checkFood();
-                kitty.src= (pos % 2 == 0 ? "~/img/KittyLeft.png" : "~/img/KittyLeft1.png") ;
+                alt = ~alt;
+                kitty.src= (alt ? "~/img/KittyLeft.png" : "~/img/KittyLeft1.png") ;
                 absoluteLayoutModule.AbsoluteLayout.setLeft(kitty, pos);
               }
               break;            
             case "right":            
                 waiting = 0;
                 last = "right";
-                pos += 1;
-                if (height == fridgeHeight && pos > fridgeRight) {
+                pos += 1 * widthScale;
+                if(pos > screenWidth) pos = screenWidth;
+               if (height == fridgeHeight && pos > fridgeRight) {
                     endHeight = counterHeight;
                     move="fall"
                     break;
                 }
                 me.checkFood();
-               kitty.src= (pos % 2 == 0 ? "~/img/KittyRight.png" : "~/img/KittyRight1.png") ;
+                alt = ~alt;
+                kitty.src= (alt ? "~/img/KittyRight.png" : "~/img/KittyRight1.png") ;
                 absoluteLayoutModule.AbsoluteLayout.setLeft(kitty, pos);
                 break;            
             case "jump":            
@@ -179,7 +186,45 @@ var viewModel = (function (_super) {
 
      }
 
-     viewModel.prototype.setFood = function () {
+     viewModel.prototype.Init = function () {
+        var scale = platformModule.screen.mainScreen.scale; //3 2
+        screenWidth = platformModule.screen.mainScreen.widthPixels / scale; //1080  2560    640
+        screenHeight = platformModule.screen.mainScreen.heightPixels  / scale; //1920 1504
+        
+        widthScale = Math.floor(screenWidth / 640);
+        heightScale = Math.floor(screenHeight / 360);
+
+        console.log(screenWidth);
+        console.log(screenHeight);
+        console.log(widthScale);
+        console.log(heightScale);
+        last = "right";
+        found = 0;
+
+        fridgeLeft = 20 * widthScale;
+        fridgeRight = 145 * widthScale;
+        counterLeft = 200 * widthScale;
+ 
+        floorHeight = 300 * heightScale - 60;
+        counterHeight = 190 * heightScale - 60;
+        fridgeHeight = 110 * heightScale - 60;
+
+        height = floorHeight;
+        endHeight = 0;
+        controlHeight = 310 * heightScale - 50;
+
+        pos = 100 * widthScale;
+        fish1Pos = 30 * widthScale;
+        fish2Pos = 200 * widthScale;
+        pelletPos = 300 * widthScale;
+        leftPos = 0;
+        rightPos = 100 * widthScale;
+        jumpPos = 550 * widthScale;
+
+        kitty = page.getViewById("kitty");
+        absoluteLayoutModule.AbsoluteLayout.setTop(kitty, height);
+        absoluteLayoutModule.AbsoluteLayout.setLeft(kitty, pos);
+         
         var view = page.getViewById("left");
         absoluteLayoutModule.AbsoluteLayout.setTop(view, controlHeight);
         absoluteLayoutModule.AbsoluteLayout.setLeft(view, leftPos);
@@ -207,7 +252,7 @@ var viewModel = (function (_super) {
         switch (height) {
         case fridgeHeight:
              if(pos == fish1Pos ) {
-                 fish1Pos = 0
+                 fish1Pos = 0;
                 var view = page.getViewById("fish1");
                 absoluteLayoutModule.AbsoluteLayout.setTop(view, 0);
                 absoluteLayoutModule.AbsoluteLayout.setLeft(view, fish1Pos);
@@ -217,7 +262,7 @@ var viewModel = (function (_super) {
         case counterHeight:
              if(pos == fish2Pos ) {
                  sound.create("~/img/found.mp3").play();
-                 fish2Pos = 30
+                 fish2Pos = 30 * widthScale;
                 var view = page.getViewById("fish2");
                 absoluteLayoutModule.AbsoluteLayout.setTop(view, 0);
                 absoluteLayoutModule.AbsoluteLayout.setLeft(view, fish2Pos);
@@ -227,7 +272,7 @@ var viewModel = (function (_super) {
         case floorHeight:
              if(pos == pelletPos ) {
                  sound.create("~/img/found.mp3").play();
-                 pelletPos = 60
+                 pelletPos = 60 * widthScale;
                 var view = page.getViewById("pellet");
                 absoluteLayoutModule.AbsoluteLayout.setTop(view, 0);
                 absoluteLayoutModule.AbsoluteLayout.setLeft(view, pelletPos);
@@ -246,7 +291,7 @@ var viewModel = (function (_super) {
             var view = page.getViewById("win");
             view.visibility = "visible";
             
-            var sec = (new Date() - time) / 1000;
+            var sec = Math.floor((new Date() - time) / 1000);
 
             alert("It took you: " + sec + " seconds to help kitty win");   
 
