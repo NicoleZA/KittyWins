@@ -1,0 +1,19 @@
+.page {
+   background-color: lemonchiffon;
+   padding: 5%;
+}
+.logo {
+   padding: 30;  
+   margin: 30;   
+}
+.button {
+    font-size: 20;
+    margin: 0 40;
+}
+
+.name {
+    margin-top: 20;
+    text-align:center;  
+    font-size: 30; 
+    color: hotpink;
+}

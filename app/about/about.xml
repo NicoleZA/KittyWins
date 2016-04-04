@@ -1,0 +1,9 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" actionBarHidden="true" loaded="pageLoaded" class="page">
+    <StackLayout stretchLastChild="true">
+        <Label text="Kitty Wins" style="margin-top: 20; text-align:center;  font-size: 40;"/>
+        <Label text="Written and designed by" style="margin-top: 20; text-align:center;  font-size: 20;"/>
+        <Label text="Nicole Orpen" class="name"/>
+        <Label text="And" style="margin-top: 20; text-align:center;  font-size: 20;"/>
+        <Label text="Makayla Kruger" class="name"/>
+    </StackLayout>
+</Page>

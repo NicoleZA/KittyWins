@@ -1,15 +1,14 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" actionBarHidden="true" class="kitchenPage" loaded="pageLoaded" >
    <AbsoluteLayout id="layout">
+        <Label id="win" text="Kitty Wins" width="100%" visibility="collapse" style="margin: 10%; text-align:center;  color: pink; font-size: 50;"/>
+        <Image id="cup" src="~/img/cup.png" style="margin-top: 25%; margin-left: 30%; height: 70%;" visibility="collapse" />
         <Image id="left" src="~/img/left.png" touch="{{moveLeft}}" class="arrows"/>    
         <Image id= "right" src="~/img/right.png" touch="{{moveRight}}" class="arrows"/>    
-        <Button id="jump" text="Jump" tap="{{jump}}" class="button"/>
+        <Button id="jump" text="Jump" tap="{{jump}}" class="jumpButton"/>
         <Image id="kitty" src="~/img/KittySitRight.png" style="height:20%;" touch="{{touchKitty}}" />
         <Image id="fish1" src="~/img/fish1-48.png" class="food"/>    
         <Image id="fish2" src="~/img/fish2-48.png" class="food"/>    
         <Image id="pellet" src="~/img/pellet-24.png" class="food"/>    
-        <DockLayout stretchLastChild="true">
-            <Label id="win" dock="top" text="Kitty Wins" visibility="collapse" style="margin-top: 20; text-align:center;  font-size: 40;"/>
-            <Image id="cup" src="~/img/cup.png" style="height:140;" visibility="collapse" />
-        </DockLayout>   
+   
     </AbsoluteLayout>
 </Page>

@@ -1,7 +1,7 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" actionBarHidden="true" loaded="pageLoaded" class="page">
     <DockLayout stretchLastChild="true">
         <Label dock="top" text="Kitty Wins" style="margin-top: 20; text-align:center;  font-size: 40;"/>
-        <Button dock="bottom" text="Quit" class="button"/>
+        <Button dock="bottom" text="About" tap="{{showAbout}}" class="button"/>
         <Button dock="bottom" text="Play" tap="{{showKitchen}}" class="button"/>
         <Image src="~/img/face.png" class="logo" />
     </DockLayout>

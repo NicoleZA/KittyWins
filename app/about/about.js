@@ -35,18 +35,6 @@ var viewModel = (function (_super) {
    
     }
  
-    viewModel.prototype.showAbout = function () {
-            var data = {
-            moduleName : "about/about",
-            context: {},
-            animated: true,
-            transition: {name: "slide", duration: 380, curve: "easeIn"},
-            clearHistory: false,
-            backstackVisible: true
-        }
-        frameModule.topmost().navigate(data);
-   
-    }
     return viewModel;
 })(observable.Observable);
 
