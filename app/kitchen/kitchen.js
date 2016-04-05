@@ -111,6 +111,7 @@ var viewModel = (function (_super) {
               pos -= stepHorizontal;
               if(pos < 0) pos = 0;
               if (height == fridgeHeight && pos < fridgeLeft) {
+                  sound.create("~/img/kittyPain.mp3").play();
                   endHeight = floorHeight;
                   move="fall"
               } else if (height == counterHeight && pos < counterLeft) {
@@ -127,8 +128,11 @@ var viewModel = (function (_super) {
                 waiting = 0;
                 last = "right";
                 pos += stepHorizontal;
-                if(pos > screenWidth) pos = screenWidth;
-               if (height == fridgeHeight && pos > fridgeRight) {
+                if(pos > screenWidth) {
+                    me.OffRight();
+                    return;
+                 }                   
+                if (height == fridgeHeight && pos > fridgeRight) {
                     endHeight = counterHeight;
                     move="fall"
                     break;
@@ -141,6 +145,10 @@ var viewModel = (function (_super) {
             case "jump":            
                 waiting = 0;
                 pos += (last == "left" ? -stepHorizontal: stepHorizontal);
+                if(pos > screenWidth) {
+                    me.OffRight();
+                    return;
+                 }                   
                 if(pos < 0) pos = 0;
                 height -= stepVertical;
                 kitty.src= (last == "left" ? "~/img/KittyJumpLeft.png" : "~/img/KittyJumpRight.png") ;
@@ -159,8 +167,11 @@ var viewModel = (function (_super) {
                     case fridgeHeight:
                         if(pos < fridgeRight) {
                             kitty.src= (last == "left" ? "~/img/KittySitLeft.png" : "~/img/KittySitRight.png") ;
-                            move = ""
-                       } else {
+                            move = "" 
+                        } else if(pos < fridgeLeft) {
+                            endHeight = floorHeight;
+                            move = "fall"
+                        } else {
                             endHeight = counterHeight;
                             move = "fall"
                        }
@@ -174,11 +185,16 @@ var viewModel = (function (_super) {
                 waiting = 0;
                 pos += (last == "left" ? -stepHorizontal: stepHorizontal);
                 if(pos < 0) pos = 0;
-                height += stepVertical;
+                if(pos > screenWidth) {
+                    me.OffRight();
+                    return;
+                 }                   
+               height += stepVertical;
                 kitty.src= (last == "left" ? "~/img/KittyFallLeft.png" : "~/img/KittyFallRight.png") ;
                 if (height >= endHeight) {
                     height = endHeight;
                      if(endHeight == counterHeight && pos < counterLeft) {
+                        sound.create("~/img/kittyPain.mp3").play();
                         endHeight = floorHeight;
                         move = "fall"
                      } else {
@@ -192,6 +208,29 @@ var viewModel = (function (_super) {
         }
 
      }
+     
+
+     viewModel.prototype.OffRight = function () {
+        last = "left";
+        if(height < counterHeight) {
+             sound.create("~/img/lionRoar.mp3").play();
+             endHeight = counterHeight; 
+            move = "fall";
+        } else if (height == counterHeight) {
+             sound.create("~/img/lionRoar.mp3").play();
+            endHeight = fridgeHeight; 
+            move = "jump";
+        } else if (height < floorHeight) {
+             sound.create("~/img/dogBark.mp3").play();
+            endHeight = floorHeight; 
+            move = "fall";
+        } else if (height == floorHeight) {
+             sound.create("~/img/dogBark.mp3").play();
+            endHeight = counterHeight; 
+            move = "jump";
+        }
+      }                   
+
 
      viewModel.prototype.Init = function () {
         isInit = true;
